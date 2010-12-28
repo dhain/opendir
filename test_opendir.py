@@ -76,11 +76,12 @@ class TestOpendir(unittest.TestCase):
 
     def test_unicode_non_decodable(self):
         d = opendir.opendir(self.path)
+        real_getfilesystemencoding = opendir.sys.getfilesystemencoding
         opendir.sys.getfilesystemencoding = lambda: 'ascii'
         try:
             self.assertEqual(set(d), self.str_contents)
         finally:
-            opendir.sys.getfilesystemencoding = sys.getfilesystemencoding
+            opendir.sys.getfilesystemencoding = real_getfilesystemencoding
 
 
 if __name__ == "__main__":
